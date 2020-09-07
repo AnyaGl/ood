@@ -51,15 +51,15 @@ public:
 	{
 		m_quackBehavior();
 	}
-	void Swim()
+	void Swim() const
 	{
 		cout << "I'm swimming" << endl;
 	}
-	void Fly()
+	void Fly() const
 	{
 		m_flyBehavior();
 	}
-	void Dance()
+	void Dance() const
 	{
 		m_danceBehavior();
 	}
@@ -149,8 +149,6 @@ void PlayWithDuck(Duck& duck)
 {
 	DrawDuck(duck);
 	duck.Quack();
-	duck.Fly();
-	duck.Fly();
 	duck.Fly();
 	duck.Dance();
 	cout << endl;

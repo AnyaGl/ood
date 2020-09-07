@@ -95,15 +95,15 @@ public:
 	{
 		m_quackBehavior->Quack();
 	}
-	void Swim()
+	void Swim() const
 	{
 		cout << "I'm swimming" << endl;
 	}
-	void Fly()
+	void Fly() const
 	{
 		m_flyBehavior->Fly();
 	}
-	void Dance()
+	void Dance() const
 	{
 		m_danceBehavior->Dance();
 	}
