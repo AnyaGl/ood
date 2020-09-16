@@ -85,7 +85,7 @@ private:
 		m_humidityStats.Update(data.humidity);
 		m_pressureStats.Update(data.pressure);
 		m_windSpeedStats.Update(data.wind.speed);
-		m_directionSpeedStats.Update(data.wind.direction);
+		m_windDirectionStats.Update(data.wind.direction);
 
 		std::cout << "Temperature\n"
 				  << m_temperatureStats.ToString() << std::endl;
@@ -95,7 +95,7 @@ private:
 				  << m_pressureStats.ToString() << std::endl;
 		std::cout << "Wind\n"
 				  << m_windSpeedStats.ToString() << std::endl;
-		std::cout << m_directionSpeedStats.ToString() << std::endl;
+		std::cout << m_windDirectionStats.ToString() << std::endl;
 		std::cout << "----------------" << std::endl;
 	}
 
@@ -103,7 +103,7 @@ private:
 	CStatistic m_humidityStats;
 	CStatistic m_pressureStats;
 	CStatistic m_windSpeedStats;
-	CDirectionStatistic m_directionSpeedStats;
+	CDirectionStatistic m_windDirectionStats;
 };
 
 class CWeatherData : public CObservable<SWeatherInfo>
