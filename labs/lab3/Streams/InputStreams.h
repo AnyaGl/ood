@@ -22,21 +22,38 @@ class CFileInputStream : public IInputDataStream
 public:
 	CFileInputStream(const std::string& fileName)
 	{
+		m_stream.open(fileName, std::ios::binary);
+		if (!m_stream.is_open())
+		{
+			throw std::ios_base::failure(fileName + " could not be opened");
+		}
 	}
 
 	bool IsEOF() const override
 	{
-		return true;
+		return m_stream.eof();
 	}
 
 	uint8_t ReadByte() override
 	{
-		return 0;
+		char byte;
+		m_stream.get(byte);
+		if (IsEOF())
+		{
+			throw std::ios_base::failure("Failed to read byte from file");
+		}
+
+		return (uint8_t)byte;
 	}
 
 	std::streamsize ReadBlock(void* dstBuffer, std::streamsize size) override
 	{
-		return 0;
+		m_stream.read(static_cast<char*>(dstBuffer), size);
+		if (m_stream.bad())
+		{
+			throw std::ios_base::failure("Failed to read block from file");
+		}
+		return m_stream.gcount();
 	}
 
 private:
