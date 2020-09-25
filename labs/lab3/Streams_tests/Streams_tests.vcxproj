@@ -151,7 +151,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Streams_tests.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MemoryInputStream_tests.cpp" />
+    <ClCompile Include="FileInputStream_tests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="empty.txt" />

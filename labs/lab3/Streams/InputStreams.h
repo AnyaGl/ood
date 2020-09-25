@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -58,4 +59,31 @@ public:
 
 private:
 	std::ifstream m_stream;
+};
+
+using MemoryStream = std::vector<uint8_t>;
+
+class CMemoryInputStream : public IInputDataStream
+{
+public:
+	CMemoryInputStream(MemoryStream& memoryStream)
+	{
+	}
+
+	bool IsEOF() const override
+	{
+		return true;
+	}
+
+	uint8_t ReadByte() override
+	{
+		return 0;
+	}
+
+	std::streamsize ReadBlock(void* dstBuffer, std::streamsize size) override
+	{
+		return 0;
+	}
+
+private:
 };
