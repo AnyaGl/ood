@@ -1,17 +1,16 @@
-﻿#define CATCH_CONFIG_MAIN
-#include "InputStreams.h"
+﻿#include "InputStreams.h"
 #include "catch2/catch.hpp"
 
 std::string NON_EXISTENT_FILE_NAME = "not-existent.txt";
 std::string EMPTY_FILE_NAME = "empty.txt";
 std::string INPUT_FILE_NAME = "input.txt";
 
-TEST_CASE("if constructor accepted non-existent file, exception must be thrown")
+TEST_CASE("if constructor accepted non-existent input file, exception must be thrown")
 {
 	CHECK_THROWS_AS(CFileInputStream(NON_EXISTENT_FILE_NAME), std::ios_base::failure);
 }
 
-TEST_CASE("Reading a byte returns the byte that have been read")
+TEST_CASE("Reading a byte returns the byte that have been read from input file")
 {
 	CFileInputStream file(INPUT_FILE_NAME);
 
@@ -29,7 +28,7 @@ TEST_CASE("Reading a byte returns the byte that have been read")
 	}
 }
 
-TEST_CASE("Reading a block returns the number of characters that have been read")
+TEST_CASE("Reading a block returns the number of characters that have been read from input file")
 {
 	CFileInputStream file(INPUT_FILE_NAME);
 	char buffer[2];
@@ -49,7 +48,7 @@ TEST_CASE("Reading a block returns the number of characters that have been read"
 	}
 }
 
-TEST_CASE("IsEOF returns true if the last read operation failed")
+TEST_CASE("IsEOF returns true if the last read operation from input file failed")
 {
 	CFileInputStream file(INPUT_FILE_NAME);
 	char buffer[5];
