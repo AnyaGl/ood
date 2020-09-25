@@ -27,6 +27,9 @@
     <ClCompile Include="FileOutputStream_tests.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="MemoryOutputStream_tests.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="empty.txt" />
