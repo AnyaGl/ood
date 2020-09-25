@@ -61,12 +61,10 @@ private:
 	std::ifstream m_stream;
 };
 
-using MemoryStream = std::vector<uint8_t>;
-
 class CMemoryInputStream : public IInputDataStream
 {
 public:
-	CMemoryInputStream(MemoryStream& memoryStream)
+	CMemoryInputStream(std::vector<uint8_t>& memoryStream)
 	{
 	}
 

@@ -1,8 +1,8 @@
 #include "InputStreams.h"
 #include "catch2/catch.hpp"
 
-MemoryStream EMPTY_STREAM = {};
-MemoryStream INPUT_STREAM = { 'A', '\n', '2', 'b' };
+std::vector<uint8_t> EMPTY_STREAM = {};
+std::vector<uint8_t> INPUT_STREAM = { 'A', '\n', '2', 'b' };
 
 TEST_CASE("Reading a byte returns the byte that have been read from input memory stream")
 {
