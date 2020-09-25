@@ -65,23 +65,42 @@ class CMemoryInputStream : public IInputDataStream
 {
 public:
 	CMemoryInputStream(std::vector<uint8_t>& memoryStream)
+		: m_stream(memoryStream)
 	{
 	}
 
 	bool IsEOF() const override
 	{
-		return true;
+		return m_pos == m_stream.size();
 	}
 
 	uint8_t ReadByte() override
 	{
-		return 0;
+		if (IsEOF())
+		{
+			throw std::ios_base::failure("Failed to read byte from memory stream");
+		}
+		return m_stream[m_pos++];
 	}
 
 	std::streamsize ReadBlock(void* dstBuffer, std::streamsize size) override
 	{
-		return 0;
+		if (size > m_stream.size() - m_pos)
+		{
+			size = m_stream.size() - m_pos;
+		}
+
+		auto buffer = static_cast<uint8_t*>(dstBuffer);
+		for (std::streamsize i = 0; i < size; i++)
+		{
+			*buffer = m_stream[m_pos++];
+			buffer++;
+		}
+		std::cout << m_pos;
+		return size;
 	}
 
 private:
+	std::vector<uint8_t>& m_stream;
+	size_t m_pos = 0;
 };
