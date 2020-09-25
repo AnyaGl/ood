@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FileOutputStream_tests.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MemoryInputStream_tests.cpp" />
     <ClCompile Include="FileInputStream_tests.cpp" />
@@ -158,6 +159,9 @@
   <ItemGroup>
     <Text Include="empty.txt" />
     <Text Include="input.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GetDataFromFile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
