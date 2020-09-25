@@ -96,7 +96,6 @@ public:
 			*buffer = m_stream[m_pos++];
 			buffer++;
 		}
-		std::cout << m_pos;
 		return size;
 	}
 
