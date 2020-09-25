@@ -54,14 +54,32 @@ class CMemoryOutputStream : public IOutputDataStream
 
 public:
 	CMemoryOutputStream(std::vector<uint8_t>& memoryStream)
+		: m_stream(memoryStream)
 	{
 	}
 
 	void WriteByte(uint8_t data) override
 	{
+		try
+		{
+			m_stream.push_back(data);
+		}
+		catch (std::exception&)
+		{
+			throw std::ios_base::failure("Failed to write to memory output stream");
+		}
 	}
 
 	void WriteBlock(const void* srcData, std::streamsize size) override
 	{
+		auto buffer = static_cast<const uint8_t*>(srcData);
+		for (std::streamsize i = 0; i < size; i++)
+		{
+			WriteByte(*buffer);
+			buffer++;
+		}
 	}
+
+private:
+	std::vector<uint8_t>& m_stream;
 };
