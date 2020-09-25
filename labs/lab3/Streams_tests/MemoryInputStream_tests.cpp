@@ -41,13 +41,14 @@ TEST_CASE("Reading a block returns the number of characters that have been read 
 	}
 }
 
-TEST_CASE("IsEOF returns true if the last read operation from input memory stream failed")
+TEST_CASE("IsEOF returns true if the next read operation from input memory stream will be fail")
 {
 	CMemoryInputStream stream(INPUT_STREAM);
-	char buffer[4];
-	stream.ReadBlock(buffer, 4);
+	char buffer[3];
+	stream.ReadBlock(buffer, 3);
 
 	CHECK_FALSE(stream.IsEOF());
-	CHECK_THROWS(stream.ReadByte());
+	CHECK_NOTHROW(stream.ReadByte());
 	CHECK(stream.IsEOF());
+	CHECK_THROWS_AS(stream.ReadByte(), std::ios_base::failure);
 }
