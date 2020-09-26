@@ -18,6 +18,8 @@ public:
 	virtual ~IInputDataStream() = default;
 };
 
+typedef std::unique_ptr<IInputDataStream> IInputDataStreamPtr;
+
 class CFileInputStream : public IInputDataStream
 {
 public:

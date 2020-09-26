@@ -17,6 +17,8 @@ public:
 	virtual ~IOutputDataStream() = default;
 };
 
+typedef std::unique_ptr<IOutputDataStream> IOutputDataStreamPtr;
+
 class CFileOutputStream : public IOutputDataStream
 {
 

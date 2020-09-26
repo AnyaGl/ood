@@ -147,7 +147,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="InputStreamDecorators.h" />
     <ClInclude Include="InputStreams.h" />
+    <ClInclude Include="OutputStreamDecorators.h" />
     <ClInclude Include="OutputStreams.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
