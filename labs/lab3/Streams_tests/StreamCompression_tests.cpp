@@ -14,22 +14,22 @@ TEST_CASE("After compression and decompression memory stream, the data must be t
 				<< AddFunctionality<CCompressedOutputStream>();
 
 			encryptedStream->WriteByte('A');
+			encryptedStream->WriteByte('A');
 			encryptedStream->WriteByte('\n');
-			encryptedStream->WriteByte('2');
 		}
 
 		auto decryptedStream = make_unique<CMemoryInputStream>(memory)
 			<< AddFunctionality<CDecompressedInputStream>();
 
 		CHECK(decryptedStream->ReadByte() == 'A');
+		CHECK(decryptedStream->ReadByte() == 'A');
 		CHECK(decryptedStream->ReadByte() == '\n');
-		CHECK(decryptedStream->ReadByte() == '2');
 	}
 
 	SECTION("writing and reading block of bytes")
 	{
 		std::vector<uint8_t> memory{};
-		char srcData[] = { 'A', '\n', '2' };
+		char srcData[] = { 'A', 'A', '\n' };
 		{
 			auto encryptedStream = make_unique<CMemoryOutputStream>(memory)
 				<< AddFunctionality<CCompressedOutputStream>();
