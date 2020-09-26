@@ -33,6 +33,9 @@
     <ClCompile Include="StreamEncryption_tests.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="StreamCompression_tests.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="empty.txt" />
@@ -42,6 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GetDataFromFile.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="AddDecorators.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
