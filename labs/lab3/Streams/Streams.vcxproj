@@ -155,7 +155,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AddDecorators.h" />
     <ClInclude Include="Chunk.h" />
     <ClInclude Include="InputStreamDecorators.h" />
     <ClInclude Include="InputStreams.h" />
