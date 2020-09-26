@@ -1,4 +1,5 @@
 #pragma once
+#include "Chunk.h"
 #include "OutputStreams.h"
 #include <algorithm>
 #include <numeric>
@@ -59,4 +60,55 @@ private:
 	}
 
 	std::vector<uint8_t> m_encryptionTable;
+};
+
+class CCompressedOutputStream : public COutputStreamDecorator
+{
+
+public:
+	CCompressedOutputStream(IOutputDataStreamPtr&& stream)
+		: COutputStreamDecorator(std::move(stream))
+	{
+	}
+
+	~CCompressedOutputStream()
+	{
+		FlushChunk();
+	}
+
+	void WriteByte(uint8_t data) override
+	{
+		if (m_chunk.IsEmpty())
+		{
+			m_chunk = { 1, data };
+			return;
+		}
+		if (m_chunk.byte == data && m_chunk.numberOfBytes < std::numeric_limits<uint8_t>::max())
+		{
+			m_chunk.numberOfBytes++;
+			return;
+		}
+		FlushChunk();
+		m_chunk = { 1, data };
+	}
+
+	void WriteBlock(const void* srcData, std::streamsize size) override
+	{
+		auto data = static_cast<const uint8_t*>(srcData);
+		for (std::streamsize i = 0; i < size; i++)
+		{
+			WriteByte(*data);
+			data++;
+		}
+	}
+
+private:
+	void FlushChunk()
+	{
+		uint8_t chunk[] = { m_chunk.numberOfBytes, m_chunk.byte };
+		m_stream->WriteBlock(chunk, 2);
+		m_chunk.Reset();
+	}
+
+	Chunk m_chunk;
 };

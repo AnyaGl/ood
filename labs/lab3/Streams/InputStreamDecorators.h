@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <numeric>
 #include <random>
+#include "Chunk.h"
 
 class CInputStreamDecorator : public IInputDataStream
 {
@@ -70,4 +71,47 @@ private:
 	}
 
 	std::vector<uint8_t> m_decryptionTable;
+};
+
+class CDecompressedInputStream : public CInputStreamDecorator
+{
+
+public:
+	CDecompressedInputStream(IInputDataStreamPtr&& stream)
+		: CInputStreamDecorator(std::move(stream))
+	{
+	}
+
+	uint8_t ReadByte() override
+	{
+		if (m_chunk.IsEmpty())
+		{
+			m_chunk.numberOfBytes = m_stream->ReadByte();
+			m_chunk.byte = m_stream->ReadByte();
+		}
+
+		m_chunk.numberOfBytes--;
+		return m_chunk.byte;
+	}
+
+	std::streamsize ReadBlock(void* dstBuffer, std::streamsize size) override
+	{
+		auto data = static_cast<uint8_t*>(dstBuffer);
+		for (std::streamsize i = 0; i < size; i++)
+		{
+			try
+			{
+				*data = ReadByte();
+			}
+			catch (std::exception&)
+			{
+				return i + 1;
+			}
+			data++;
+		}
+		return size;
+	}
+
+private:
+	Chunk m_chunk;
 };
