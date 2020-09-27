@@ -5,6 +5,7 @@
 using namespace std;
 
 using Strategy = function<void()>;
+using DanceStrategy = function<void(int)>;
 
 function<void()> FlyWithWings()
 {
@@ -26,22 +27,22 @@ void SqueakBehavior()
 };
 void MuteQuackBehavior(){};
 
-void DanceTheWaltz()
+void DanceTheWaltz(int speed)
 {
-	cout << "I'm dancing waltz!!" << endl;
+	cout << "I'm dancing waltz!! speed: " << speed << endl;
 };
-void DanceTheMinuet()
+void DanceTheMinuet(int speed)
 {
-	cout << "I'm dancing minuet!!" << endl;
+	cout << "I'm dancing minuet!! speed : " << speed << endl;
 };
-void DanceNoWay(){};
+void DanceNoWay(int speed){};
 
 class Duck
 {
 public:
 	Duck(Strategy&& flyBehavior,
 		Strategy&& quackBehavior,
-		Strategy&& danceBehavior)
+		DanceStrategy&& danceBehavior)
 		: m_quackBehavior(move(quackBehavior))
 		, m_danceBehavior(move(danceBehavior))
 	{
@@ -59,9 +60,9 @@ public:
 	{
 		m_flyBehavior();
 	}
-	void Dance() const
+	void Dance(int speed) const
 	{
-		m_danceBehavior();
+		m_danceBehavior(speed);
 	}
 	void SetFlyBehavior(Strategy&& flyBehavior)
 	{
@@ -73,7 +74,7 @@ public:
 private:
 	Strategy m_flyBehavior;
 	Strategy m_quackBehavior;
-	Strategy m_danceBehavior;
+	DanceStrategy m_danceBehavior;
 };
 
 class MallardDuck : public Duck
@@ -150,7 +151,7 @@ void PlayWithDuck(Duck& duck)
 	DrawDuck(duck);
 	duck.Quack();
 	duck.Fly();
-	duck.Dance();
+	duck.Dance(10);
 	cout << endl;
 }
 
