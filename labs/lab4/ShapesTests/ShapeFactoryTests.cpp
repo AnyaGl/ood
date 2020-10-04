@@ -10,7 +10,7 @@ TEST_CASE("If description is invalid, an exception must be trown")
 	CShapeFactory factory;
 	CHECK_THROWS(factory.CreateShape(""));
 	CHECK_THROWS(factory.CreateShape("circle red 10 10 2"));
-	CHECK_THROWS(factory.CreateShape("triangle red 0z 0 10 10 10 0"));
+	CHECK_THROWS(factory.CreateShape("triangle red z0 0 10 10 10 0"));
 }
 
 TEST_CASE("Factory must create shape from passed string")
