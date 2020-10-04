@@ -11,13 +11,17 @@ CPictureDraft CDesigner::CreateDraft(std::istream& stream) const
 	CPictureDraft draft;
 	std::string line;
 
-	while (std::getline(stream, line))
+	while (std::getline(stream, line) && line != "exit")
 	{
-		if (line == "exit")
+		try
 		{
-			break;
+			draft.AddShape(m_factory.CreateShape(line));
 		}
-		draft.AddShape(m_factory.CreateShape(line));
+		catch (const std::exception& e)
+		{
+			std::cout << e.what() << std::endl;
+			continue;
+		}
 	}
 
 	return draft;
