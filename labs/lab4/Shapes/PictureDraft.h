@@ -12,5 +12,5 @@ public:
 	void AddShape(std::unique_ptr<CShape>&& shape);
 
 private:
-	std::vector<std::unique_ptr<CShape>> m_shapes;
+	std::vector<std::unique_ptr<CShape>> m_shapes{};
 };
