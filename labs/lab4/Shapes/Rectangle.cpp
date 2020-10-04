@@ -10,6 +10,15 @@ CRectangle::CRectangle(Color color, Point const& leftTop, double width, double h
 
 void CRectangle::Draw(ICanvas& canvas) const
 {
+	Point rightBottom = GetRightBottom();
+	Point leftBottom{ m_leftTop.x, rightBottom.y };
+	Point rightTop{ rightBottom.x, m_leftTop.y };
+
+	canvas.SetColor(m_color);
+	canvas.DrawLine(m_leftTop, leftBottom);
+	canvas.DrawLine(leftBottom, rightBottom);
+	canvas.DrawLine(rightBottom, rightTop);
+	canvas.DrawLine(rightTop, m_leftTop);
 }
 
 Point CRectangle::GetLeftTop() const

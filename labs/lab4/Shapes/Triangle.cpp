@@ -10,6 +10,10 @@ CTriangle::CTriangle(Color color, Point const& vertex1, Point const& vertex2, Po
 
 void CTriangle::Draw(ICanvas& canvas) const
 {
+	canvas.SetColor(m_color);
+	canvas.DrawLine(m_vertex1, m_vertex2);
+	canvas.DrawLine(m_vertex1, m_vertex3);
+	canvas.DrawLine(m_vertex2, m_vertex3);
 }
 
 Point CTriangle::GetVertex1() const
