@@ -177,6 +177,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PainterTests.cpp" />
     <ClCompile Include="PictureDraftTests.cpp" />
+    <ClCompile Include="ShapeFactoryTests.cpp" />
     <ClCompile Include="ShapesTests.cpp" />
   </ItemGroup>
   <ItemGroup>
