@@ -20,7 +20,7 @@ private:
 	using Handler = std::function<std::unique_ptr<CShape>(Params const& params)>;
 	using ActionMap = std::map<std::string, Handler>;
 
-	const ActionMap SHAPES_CREATION = { { "regular_polygon", std::bind(&CreateRegularPolygon, std::placeholders::_1) },
+	const ActionMap SHAPES_CREATION = { { "regularpolygon", std::bind(&CreateRegularPolygon, std::placeholders::_1) },
 		{ "rectangle", std::bind(&CreateRectangle, std::placeholders::_1) },
 		{ "triangle", std::bind(&CreateTriangle, std::placeholders::_1) },
 		{ "ellipse", std::bind(&CreateEllipse, std::placeholders::_1) } };

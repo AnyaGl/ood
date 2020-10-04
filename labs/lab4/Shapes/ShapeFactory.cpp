@@ -80,7 +80,7 @@ size_t CShapeFactory::ToUnsigned(std::string const& number)
 {
 	try
 	{
-		return std::stoull(number);
+		return (size_t)std::stoull(number);
 	}
 	catch (const std::exception&)
 	{
