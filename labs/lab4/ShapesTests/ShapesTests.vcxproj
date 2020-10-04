@@ -173,6 +173,7 @@
     <ClCompile Include="..\Shapes\Shape.cpp" />
     <ClCompile Include="..\Shapes\ShapeFactory.cpp" />
     <ClCompile Include="..\Shapes\Triangle.cpp" />
+    <ClCompile Include="DesignerTests.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PainterTests.cpp" />
     <ClCompile Include="PictureDraftTests.cpp" />
