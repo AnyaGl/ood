@@ -19,7 +19,7 @@ TEST_CASE("Factory must create shape from passed string")
 
 	SECTION("create triangle")
 	{
-		auto shape = factory.CreateShape("triangle red 0 0 10 10 10 0");
+		auto shape = factory.CreateShape("triAngle RED 0 0 10   10 10  0  ");
 		CTriangle triangle = dynamic_cast<CTriangle&>(*shape.get());
 
 		CHECK(triangle.GetVertex1() == Point{ 0, 0 });
@@ -51,7 +51,7 @@ TEST_CASE("Factory must create shape from passed string")
 
 	SECTION("create regular polygon")
 	{
-		auto shape = factory.CreateShape("regular_polygon green 6 10 10 5");
+		auto shape = factory.CreateShape("regularpolygon green 6 10 10 5");
 		CRegularPolygon polygon = dynamic_cast<CRegularPolygon&>(*shape.get());
 
 		CHECK(polygon.GetVertexCount() == 6);

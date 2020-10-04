@@ -21,12 +21,4 @@ TEST_CASE("Designer must create picture draft from input stream")
 	CHECK(draftTriangle.GetVertex1() == Point{ 0, 0 });
 	CHECK(draftTriangle.GetVertex2() == Point{ 10, 10 });
 	CHECK(draftTriangle.GetVertex3() == Point{ 10, 0 });
-
-	SECTION("If stream is invalid, an exception must be thrown")
-	{
-		std::stringstream invalidStream;
-		invalidStream << "Rectangle red a5.1 4.2 2 1";
-
-		CHECK_THROWS(designer.CreateDraft(invalidStream));
-	}
 }
