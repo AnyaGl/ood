@@ -14,7 +14,7 @@ public:
 		++m_lineCounter;
 	}
 
-	void DrawEllipse(Point const& center, size_t horizontalRadius, size_t verticalRadius) override
+	void DrawEllipse(Point const& center, double horizontalRadius, double verticalRadius) override
 	{
 		++m_ellipseCounter;
 	}

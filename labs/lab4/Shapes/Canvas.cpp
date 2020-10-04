@@ -9,6 +9,6 @@ void CCanvas::DrawLine(Point const& from, Point const& to)
 {
 }
 
-void CCanvas::DrawEllipse(Point const& center, size_t horizontalRadius, size_t verticalRadius)
+void CCanvas::DrawEllipse(Point const& center, double horizontalRadius, double verticalRadius)
 {
 }
