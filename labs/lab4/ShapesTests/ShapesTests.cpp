@@ -26,7 +26,7 @@ TEST_CASE("Rectangle")
 		CMockCanvas canvas;
 		rectangle.Draw(canvas);
 
-		CHECK(canvas.GetColor() == Color::Blue);
+		CHECK(canvas.GetColor() == Color::Black);
 		CHECK(canvas.GetLineCounter() == 4);
 		CHECK(canvas.GetEllipseCounter() == 0);
 	}
