@@ -38,7 +38,7 @@ void CHistory::AddAndExecuteCommand(ICommandPtr&& command)
 	++m_nextIndex;
 	m_commands.push_back(std::move(command));
 
-	if (m_nextIndex == HISTORY_LENGTH)
+	if (m_nextIndex - 1 == HISTORY_LENGTH)
 	{
 		m_commands.erase(m_commands.begin());
 		--m_nextIndex;
