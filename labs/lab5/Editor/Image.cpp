@@ -36,7 +36,7 @@ int CImage::GetHeight() const
 
 void CImage::Resize(int width, int height)
 {
-	if (width < 0 || height < 0)
+	if (width < 1 || height < 1 || width > 10000 || height > 10000)
 	{
 		throw std::invalid_argument("image size cannot be negative");
 	}
