@@ -40,6 +40,8 @@ void CImage::Resize(int width, int height)
 	{
 		throw std::invalid_argument("image size cannot be negative");
 	}
+	m_width = width;
+	m_height = height;
 }
 
 bool CImage::IsImage(Path const& path)
