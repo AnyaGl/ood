@@ -1,31 +1,24 @@
 #include "DeleteItemCommand.h"
-#include <filesystem>
 #include "Paragraph.h"
+#include <filesystem>
 
 CDeleteItemCommand::CDeleteItemCommand(std::vector<CDocumentItem>& items, size_t index)
 	: m_items(items)
 	, m_index(index)
-	, m_item(CDocumentItem(std::make_shared<CParagraph>("")))
 {
 	if (m_index >= m_items.size())
 	{
 		throw std::invalid_argument("Index cannot be greater than number of elements");
 	}
-	m_item = CDocumentItem(m_items.at(index));
+	auto item = m_items.at(index);
+	m_item = std::make_shared<CDocumentItem>(item);
 }
 
 CDeleteItemCommand::~CDeleteItemCommand()
 {
-	try
+	if (IsExecuted() && m_item->GetImage())
 	{
-		auto image = m_item.GetImage();
-		if (IsExecuted() && image)
-		{
-			std::filesystem::remove(image->GetPath());
-		}
-	}
-	catch (...)
-	{
+		m_item->GetImage()->RemoveFile();
 	}
 }
 
@@ -36,5 +29,5 @@ void CDeleteItemCommand::DoExecute()
 
 void CDeleteItemCommand::DoUnexecute()
 {
-	m_items.emplace(m_items.begin() + m_index, m_item);
+	m_items.emplace(m_items.begin() + m_index, *m_item);
 }

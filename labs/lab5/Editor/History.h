@@ -1,6 +1,7 @@
 #pragma once
 #include "ICommand.h"
 #include <vector>
+
 class CHistory
 {
 public:

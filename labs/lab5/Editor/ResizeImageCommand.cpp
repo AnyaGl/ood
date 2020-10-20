@@ -1,20 +1,25 @@
 #include "ResizeImageCommand.h"
 
-CResizeImageCommand::CResizeImageCommand(std::shared_ptr<IImage> image, int width, int height)
-	: m_image(image)
-	, m_newWidth(width)
-	, m_newHeight(height)
+CResizeImageCommand::CResizeImageCommand(int& width, int& height, int newWidth, int newHeight)
+	: m_width(width)
+	, m_height(height)
 {
-	m_width = image->GetWidth();
-	m_height = image->GetHeight();
+	if (newWidth < 1 || newHeight < 1 || newWidth > 10000 || newHeight > 10000)
+	{
+		throw std::invalid_argument("image size cannot be negative");
+	}
+	m_newWidth = newWidth;
+	m_newHeight = newHeight;
 }
 
 void CResizeImageCommand::DoExecute()
 {
-	m_image->Resize(m_newWidth, m_newHeight);
+	std::swap(m_height, m_newHeight);
+	std::swap(m_width, m_newWidth);
 }
 
 void CResizeImageCommand::DoUnexecute()
 {
-	m_image->Resize(m_width, m_height);
+	std::swap(m_height, m_newHeight);
+	std::swap(m_width, m_newWidth);
 }

@@ -1,7 +1,7 @@
 #include "Editor.h"
+#include "Document.h"
 #include <functional>
 #include <iostream>
-#include "Document.h"
 
 using namespace std::placeholders;
 
@@ -37,6 +37,7 @@ void CEditor::InsertParagraph(std::istream& in)
 		std::cout << "invalid arguments" << std::endl;
 		return;
 	}
+	text.erase(text.begin());	
 
 	std::optional<size_t> position = std::nullopt;
 	try

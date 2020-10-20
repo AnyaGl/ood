@@ -1,28 +1,34 @@
 #include "Document.h"
 #include "DeleteItemCommand.h"
-#include "InsertParagraphCommand.h"
-#include "InsertImageCommand.h"
+#include "HistoryAdapter.h"
+#include "Image.h"
+#include "InsertDocumentItemCommand.h"
+#include "Paragraph.h"
 #include "ReplaceParagraphTextCommand.h"
 #include "ResizeImageCommand.h"
-#include <fstream>
 #include "SetTitleCommand.h"
+#include <fstream>
 
 const std::string IMAGES_DIR = "images";
 
 std::shared_ptr<IParagraph> CDocument::InsertParagraph(const std::string& text, std::optional<size_t> index)
 {
-	m_history.AddAndExecuteCommand(std::make_unique<CInsertParagraphCommand>(text, m_items, index));
+	CHistoryAdapter history(m_history);
+	auto paragraph = std::make_shared<CParagraph>(text, history);
+	auto document = CDocumentItem(paragraph);
+	m_history.AddAndExecuteCommand(std::make_unique<CInsertDocumentItemCommand>(document, m_items, index));
 
-	size_t resIndex = (index) ? (index.value()) : (m_items.size() - 1);
-	return m_items.at(resIndex).GetParagraph();
+	return paragraph;
 }
 
 std::shared_ptr<IImage> CDocument::InsertImage(const Path& path, int width, int height, std::optional<size_t> index)
 {
-	m_history.AddAndExecuteCommand(std::make_unique<CInsertImageCommand>(width, height, path, IMAGES_DIR, m_items, index));
+	CHistoryAdapter history(m_history);
+	auto image = std::make_shared<CImage>(path, width, height, history);
+	auto document = CDocumentItem(image);
+	m_history.AddAndExecuteCommand(std::make_unique<CInsertDocumentItemCommand>(document, m_items, index));
 
-	size_t resIndex = (index) ? (index.value()) : (m_items.size() - 1);
-	return m_items.at(resIndex).GetImage();
+	return image;
 }
 
 size_t CDocument::GetItemsCount() const
@@ -58,7 +64,7 @@ void CDocument::ReplaceParagraphText(size_t index, const std::string& text)
 		throw std::invalid_argument("Is not a paragraph");
 	}
 
-	m_history.AddAndExecuteCommand(std::make_unique<CReplaceParagraphTextCommand>(paragraph, text));
+	paragraph->SetText(text);
 }
 
 void CDocument::ResizeImage(size_t index, int width, int height)
@@ -74,7 +80,7 @@ void CDocument::ResizeImage(size_t index, int width, int height)
 		throw std::invalid_argument("Is not an image");
 	}
 
-	m_history.AddAndExecuteCommand(std::make_unique<CResizeImageCommand>(image, width, height));
+	image->Resize(width, height);
 }
 
 std::string CDocument::GetTitle() const
@@ -146,6 +152,12 @@ void CDocument::Save(const Path& path) const
 {
 	std::ofstream html(path);
 
+	Path directory = path.parent_path() / IMAGES_DIR;
+	if (!std::filesystem::is_directory(directory))
+	{
+		std::filesystem::create_directory(directory);
+	}
+
 	html << "<html>\n"
 		 << "<head>\n"
 		 << "<title>" << ConvertToHtmlString(m_title) << "</title>\n"
@@ -160,7 +172,9 @@ void CDocument::Save(const Path& path) const
 			int width = image->GetWidth();
 			int height = image->GetHeight();
 
-			html << "(<img src=" + ConvertToHtmlString(src.string()) + " width=" + std::to_string(width) + " height=" + std::to_string(height) + " />)" << std::endl;
+			html << "<img src=" + ConvertToHtmlString(src.string()) + " width=" + std::to_string(width) + " height=" + std::to_string(height) + " />" << std::endl;
+
+			std::filesystem::copy_file(src, directory / src.filename());
 		}
 		else
 		{

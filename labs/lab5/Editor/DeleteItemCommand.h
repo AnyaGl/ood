@@ -16,5 +16,5 @@ private:
 
 	std::vector<CDocumentItem>& m_items;
 	size_t m_index;
-	CDocumentItem m_item;
+	std::shared_ptr<CDocumentItem> m_item;
 };

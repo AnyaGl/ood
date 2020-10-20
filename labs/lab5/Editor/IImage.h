@@ -9,6 +9,7 @@ public:
 	virtual int GetHeight() const = 0;
 
 	virtual void Resize(int width, int height) = 0;
+	virtual void RemoveFile() = 0;
 
 	virtual ~IImage() = default;
 };
