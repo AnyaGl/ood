@@ -8,6 +8,19 @@ const std::string SVG = ".svg";
 
 const std::string IMAGES_DIRECTORY = "images";
 
+namespace
+{
+std::string CreateRandomName(int length)
+{
+	std::string result;
+	for (int i = 0; i < length; ++i)
+	{
+		result += char(rand() % ('z' - 'a' + 1) + 'a');
+	}
+	return result;
+}
+} // namespace
+
 CImage::CImage(Path const& path, int width, int height, ICommandSink& commandSink)
 	: m_commandSink(commandSink)
 {
@@ -22,7 +35,7 @@ CImage::CImage(Path const& path, int width, int height, ICommandSink& commandSin
 	m_width = width;
 	m_height = height;
 
-	std::string newFileName = std::to_string(std::time(nullptr));
+	std::string newFileName = CreateRandomName(6);
 	std::string resultPath = IMAGES_DIRECTORY + "/" + newFileName + path.extension().string();
 	if (!std::filesystem::is_directory(IMAGES_DIRECTORY))
 	{
