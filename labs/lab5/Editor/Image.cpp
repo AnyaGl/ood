@@ -1,6 +1,7 @@
 #include "Image.h"
 #include "ResizeImageCommand.h"
 #include <string>
+#include <random>
 
 const std::string JPG = ".jpg";
 const std::string PNG = ".png";
@@ -10,13 +11,20 @@ const std::string IMAGES_DIRECTORY = "images";
 
 namespace
 {
-std::string CreateRandomName(int length)
+std::string CreateRandomName(size_t length)
 {
+	const std::string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+	std::random_device randomDevice;
+	std::uniform_int_distribution<int> distribution(0, characters.size() - 1);
+
 	std::string result;
-	for (int i = 0; i < length; ++i)
+
+	for (std::size_t i = 0; i < length; ++i)
 	{
-		result += char(rand() % ('z' - 'a' + 1) + 'a');
+		result += characters[distribution(randomDevice)];
 	}
+
 	return result;
 }
 } // namespace
@@ -35,7 +43,7 @@ CImage::CImage(Path const& path, int width, int height, ICommandSink& commandSin
 	m_width = width;
 	m_height = height;
 
-	std::string newFileName = CreateRandomName(6);
+	std::string newFileName = CreateRandomName(9);
 	std::string resultPath = IMAGES_DIRECTORY + "/" + newFileName + path.extension().string();
 	if (!std::filesystem::is_directory(IMAGES_DIRECTORY))
 	{
