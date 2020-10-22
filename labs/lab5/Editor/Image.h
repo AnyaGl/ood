@@ -13,7 +13,7 @@ public:
 
 	void Resize(int width, int height) override;
 
-	void RemoveFile() override;
+	void RemoveFile() noexcept override;
 
 private:
 	static bool IsImage(Path const& path);

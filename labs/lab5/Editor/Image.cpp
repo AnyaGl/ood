@@ -16,7 +16,7 @@ std::string CreateRandomName(size_t length)
 	const std::string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
 	std::random_device randomDevice;
-	std::uniform_int_distribution<int> distribution(0, characters.size() - 1);
+	std::uniform_int_distribution<size_t> distribution(0, characters.size() - 1);
 
 	std::string result;
 
@@ -74,7 +74,7 @@ void CImage::Resize(int width, int height)
 	m_commandSink.SaveCommand(std::make_unique<CResizeImageCommand>(m_height, m_width, height, width));
 }
 
-void CImage::RemoveFile()
+void CImage::RemoveFile() noexcept
 {
 	try
 	{

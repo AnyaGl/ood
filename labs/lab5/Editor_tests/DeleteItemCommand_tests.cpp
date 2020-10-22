@@ -4,9 +4,12 @@
 #include "MockCommandSink.h"
 #include "catch2/catch.hpp"
 
+namespace
+{
 CMockCommandSink commandSink;
 CDocumentItem paragraph1(std::make_shared<CParagraph>("text1", commandSink));
 CDocumentItem paragraph2(std::make_shared<CParagraph>("text2", commandSink));
+} // namespace
 
 TEST_CASE("It is impossible to delete a document from a nonexistent position")
 {
