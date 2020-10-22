@@ -18,10 +18,10 @@ int main()
 				 "to stop enter shapes write \"exit\"\n\n";
 
 	CShapeFactory factory;
-	CDesigner desinger(factory);
+	CDesigner designer(factory);
 	CPictureDraft draft;
 
-	draft = desinger.CreateDraft(std::cin);
+	draft = designer.CreateDraft(std::cin);
 
 	std::cout << "Do you want to draw draft? y/n" << std::endl;
 	std::string answer;

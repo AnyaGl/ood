@@ -1,10 +1,10 @@
 #include "Canvas.h"
 
-CCanvas::CCanvas(sf::RenderTarget& window)
-	: m_window(window)
+CCanvas::CCanvas(sf::RenderTarget& renederTarget)
+	: m_renderTarget(renederTarget)
 {
-	m_width = window.getSize().x;
-	m_height = window.getSize().y;
+	m_width = renederTarget.getSize().x;
+	m_height = renederTarget.getSize().y;
 }
 
 void CCanvas::SetColor(Color color)
@@ -44,7 +44,7 @@ void CCanvas::DrawLine(Point const& from, Point const& to)
 	line[0].color = m_color;
 	line[1].color = m_color;
 
-	m_window.draw(line, 2, sf::Lines);
+	m_renderTarget.draw(line, 2, sf::Lines);
 }
 
 void CCanvas::DrawEllipse(Point const& center, double horizontalRadius, double verticalRadius)
@@ -58,7 +58,7 @@ void CCanvas::DrawEllipse(Point const& center, double horizontalRadius, double v
 	circle.setOutlineThickness(3.f);
 	circle.setFillColor(sf::Color(0, 0, 0, 0));
 
-	m_window.draw(circle);
+	m_renderTarget.draw(circle);
 }
 
 sf::Vector2f CCanvas::GetCoordOnCanvas(Point const& point)
