@@ -186,6 +186,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="History_tests.cpp" />
     <ClCompile Include="Menu_tests.cpp" />
+    <ClCompile Include="ReplaceParagraphTextCommand_tests.cpp" />
+    <ClCompile Include="ResizeImageCommand_tests.cpp" />
+    <ClCompile Include="SetTitleCommand_tests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Editor\AbstractCommand.h" />
