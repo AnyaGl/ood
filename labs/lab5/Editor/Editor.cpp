@@ -5,8 +5,10 @@
 
 using namespace std::placeholders;
 
-CEditor::CEditor()
-	: m_document(std::make_unique<CDocument>())
+CEditor::CEditor(std::istream& inStream, std::ostream& outStream)
+	: m_menu(inStream, outStream)
+	, m_document(std::make_unique<CDocument>())
+	, m_outStream(outStream)
 {
 	m_menu.AddItem("help", "Help", [this](std::istream&) { m_menu.ShowInstructions(); });
 	m_menu.AddItem("exit", "Exit", [this](std::istream&) { m_menu.Exit(); });
@@ -34,7 +36,7 @@ void CEditor::InsertParagraph(std::istream& in)
 
 	if (!(in >> positionStr) || !getline(in, text))
 	{
-		std::cout << "invalid arguments" << std::endl;
+		m_outStream << "invalid arguments" << std::endl;
 		return;
 	}
 	text.erase(text.begin());	
@@ -50,7 +52,7 @@ void CEditor::InsertParagraph(std::istream& in)
 	}
 	catch (const std::exception& e)
 	{
-		std::cout << e.what() << std::endl;
+		m_outStream << e.what() << std::endl;
 	}
 }
 
@@ -63,7 +65,7 @@ void CEditor::InsertImage(std::istream& in)
 
 	if (!((in >> positionStr) && (in >> width) && (in >> height) && (in >> path)))
 	{
-		std::cout << "invalid arguments" << std::endl;
+		m_outStream << "invalid arguments" << std::endl;
 		return;
 	}
 
@@ -78,7 +80,7 @@ void CEditor::InsertImage(std::istream& in)
 	}
 	catch (const std::exception& e)
 	{
-		std::cout << e.what() << std::endl;
+		m_outStream << e.what() << std::endl;
 	}
 }
 
@@ -86,24 +88,26 @@ void CEditor::SetTitle(std::istream& in)
 {
 	std::string title;
 	std::getline(in, title);
+	title.erase(title.begin());
+
 	m_document->SetTitle(title);
 }
 
 void CEditor::List(std::istream&)
 {
-	std::cout << "  Title: " << m_document->GetTitle() << std::endl;
+	m_outStream << "  Title: " << m_document->GetTitle() << std::endl;
 
 	for (size_t i = 0; i < m_document->GetItemsCount(); i++)
 	{
-		std::cout << " \t" << i << ". ";
+		m_outStream << " \t" << i << ". ";
 		auto item = m_document->GetItem(i);
 		if (auto paragraph = item.GetParagraph())
 		{
-			std::cout << "Paragraph: " << paragraph->GetText() << std::endl;
+			m_outStream << "Paragraph: " << paragraph->GetText() << std::endl;
 		}
 		if (auto image = item.GetImage())
 		{
-			std::cout << "Image: " << image->GetWidth() << " " << image->GetHeight() << " " << image->GetPath() << std::endl;
+			m_outStream << "Image: " << image->GetWidth() << " " << image->GetHeight() << " " << image->GetPath() << std::endl;
 		}
 	}
 }
@@ -115,7 +119,7 @@ void CEditor::ReplaceText(std::istream& in)
 
 	if (!(in >> position) || !getline(in, text))
 	{
-		std::cout << "invalid arguments" << std::endl;
+		m_outStream << "invalid arguments" << std::endl;
 		return;
 	}
 
@@ -125,7 +129,7 @@ void CEditor::ReplaceText(std::istream& in)
 	}
 	catch (const std::exception& e)
 	{
-		std::cout << e.what() << std::endl;
+		m_outStream << e.what() << std::endl;
 	}
 }
 
@@ -137,7 +141,7 @@ void CEditor::ResizeImage(std::istream& in)
 
 	if (!((in >> position) && (in >> width) && (in >> height)))
 	{
-		std::cout << "invalid arguments" << std::endl;
+		m_outStream << "invalid arguments" << std::endl;
 		return;
 	}
 
@@ -147,7 +151,7 @@ void CEditor::ResizeImage(std::istream& in)
 	}
 	catch (const std::exception& e)
 	{
-		std::cout << e.what() << std::endl;
+		m_outStream << e.what() << std::endl;
 	}
 }
 
@@ -157,7 +161,7 @@ void CEditor::DeleteItem(std::istream& in)
 
 	if (!(in >> position))
 	{
-		std::cout << "invalid arguments" << std::endl;
+		m_outStream << "invalid arguments" << std::endl;
 		return;
 	}
 
@@ -167,7 +171,7 @@ void CEditor::DeleteItem(std::istream& in)
 	}
 	catch (const std::exception& e)
 	{
-		std::cout << e.what() << std::endl;
+		m_outStream << e.what() << std::endl;
 	}
 }
 
@@ -179,7 +183,7 @@ void CEditor::Undo(std::istream&)
 	}
 	else
 	{
-		std::cout << "Can't undo" << std::endl;
+		m_outStream << "Can't undo" << std::endl;
 	}
 }
 
@@ -191,7 +195,7 @@ void CEditor::Redo(std::istream&)
 	}
 	else
 	{
-		std::cout << "Can't redo" << std::endl;
+		m_outStream << "Can't redo" << std::endl;
 	}
 }
 

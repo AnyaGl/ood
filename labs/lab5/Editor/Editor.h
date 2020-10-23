@@ -4,7 +4,7 @@
 class CEditor
 {
 public:
-	CEditor();
+	CEditor(std::istream& inStream = std::cin, std::ostream& outStream = std::cout);
 	void Run();
 
 private:
@@ -21,4 +21,5 @@ private:
 
 	CMenu m_menu;
 	std::unique_ptr<IDocument> m_document;
+	std::ostream& m_outStream;
 };

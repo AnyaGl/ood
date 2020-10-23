@@ -1,10 +1,13 @@
 #pragma once
 #include "History.h"
 #include "IDocument.h"
+#include "HistoryAdapter.h"
 
 class CDocument : public IDocument
 {
 public:
+	CDocument();
+
 	std::shared_ptr<IParagraph> InsertParagraph(const std::string& text, std::optional<size_t> index = std::nullopt) override;
 	std::shared_ptr<IImage> InsertImage(const Path& path, int width, int height, std::optional<size_t> index = std::nullopt) override;
 
@@ -32,4 +35,5 @@ private:
 	std::string m_title;
 	std::vector<CDocumentItem> m_items{};
 	CHistory m_history;
+	CHistoryAdapter m_commandSink;
 };

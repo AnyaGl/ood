@@ -1,6 +1,5 @@
 #include "Document.h"
 #include "DeleteItemCommand.h"
-#include "HistoryAdapter.h"
 #include "Image.h"
 #include "InsertDocumentItemCommand.h"
 #include "Paragraph.h"
@@ -11,10 +10,14 @@
 
 const std::string IMAGES_DIR = "images";
 
+CDocument::CDocument()
+	: m_commandSink(CHistoryAdapter(m_history))
+{
+}
+
 std::shared_ptr<IParagraph> CDocument::InsertParagraph(const std::string& text, std::optional<size_t> index)
 {
-	CHistoryAdapter history(m_history);
-	auto paragraph = std::make_shared<CParagraph>(text, history);
+	auto paragraph = std::make_shared<CParagraph>(text, m_commandSink);
 	auto document = CDocumentItem(paragraph);
 	m_history.AddAndExecuteCommand(std::make_unique<CInsertDocumentItemCommand>(document, m_items, index));
 
@@ -23,8 +26,7 @@ std::shared_ptr<IParagraph> CDocument::InsertParagraph(const std::string& text, 
 
 std::shared_ptr<IImage> CDocument::InsertImage(const Path& path, int width, int height, std::optional<size_t> index)
 {
-	CHistoryAdapter history(m_history);
-	auto image = std::make_shared<CImage>(path, width, height, history);
+	auto image = std::make_shared<CImage>(path, width, height, m_commandSink);
 	auto document = CDocumentItem(image);
 	m_history.AddAndExecuteCommand(std::make_unique<CInsertDocumentItemCommand>(document, m_items, index));
 
@@ -172,9 +174,12 @@ void CDocument::Save(const Path& path) const
 			int width = image->GetWidth();
 			int height = image->GetHeight();
 
-			html << "<img src=" + ConvertToHtmlString(src.string()) + " width=" + std::to_string(width) + " height=" + std::to_string(height) + " />" << std::endl;
+			html << "<img src=\"" + src.string() + "\" width=\"" + std::to_string(width) + "\" height=\"" + std::to_string(height) + "\" />" << std::endl;
 
-			std::filesystem::copy_file(src, directory / src.filename());
+			if (!std::filesystem::exists(directory / src.filename()))
+			{
+				std::filesystem::copy_file(src, directory / src.filename());
+			}
 		}
 		else
 		{

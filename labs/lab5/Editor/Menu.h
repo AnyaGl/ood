@@ -10,7 +10,7 @@ class CMenu
 public:
 	typedef std::function<void(std::istream& in)> Command;
 
-	CMenu(std::istream& inStream = std::cin, std::ostream& outStream = std::cout);
+	CMenu(std::istream& inStream, std::ostream& outStream);
 
 	void AddItem(const std::string& shortcut, const std::string& description, Command const& command);
 	void Run();
