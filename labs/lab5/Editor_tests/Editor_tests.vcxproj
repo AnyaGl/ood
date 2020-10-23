@@ -184,6 +184,8 @@
     <ClCompile Include="..\Editor\SetTitleCommand.cpp" />
     <ClCompile Include="DeleteItemCommand_tests.cpp" />
     <ClCompile Include="Documents_tests.cpp" />
+    <ClCompile Include="Document_tests.cpp" />
+    <ClCompile Include="Editor_tests.cpp" />
     <ClCompile Include="InsertDocumentItemCommand_tests.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="History_tests.cpp" />
