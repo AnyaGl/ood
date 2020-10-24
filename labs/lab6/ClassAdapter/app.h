@@ -10,7 +10,18 @@ class CModernGraphicsAdapter : public graphics_lib::ICanvas
 public:
 	CModernGraphicsAdapter(std::ostream& strm)
 		: modern_graphics_lib::CModernGraphicsRenderer(strm)
+		, m_color(0, 0, 0, 1)
 	{
+	}
+
+	void SetColor(uint32_t rgbColor) override
+	{
+		float b = float(rgbColor % 256 / 255.0);
+		float g = float((rgbColor / 256) % 256 / 255.0);
+		float r = float(((rgbColor / 256) / 256) % 256 / 255.0);
+		float a = 1.;
+
+		m_color = {r, g, b, a};
 	}
 
 	void MoveTo(int x, int y) override
@@ -20,18 +31,19 @@ public:
 	void LineTo(int x, int y) override
 	{
 		modern_graphics_lib::CPoint end(x, y);
-		DrawLine(m_start, end);
+		DrawLine(m_start, end, m_color);
 	}
 
 private:
 	modern_graphics_lib::CPoint m_start;
+	modern_graphics_lib::CRGBAColor m_color;
 };
 
 void PaintPicture(shape_drawing_lib::CCanvasPainter& painter)
 {
 	using namespace shape_drawing_lib;
 
-	CTriangle triangle({ 10, 15 }, { 100, 200 }, { 150, 250 });
+	CTriangle triangle({ 10, 15 }, { 100, 200 }, { 150, 250 }, 0xAA12B0);
 	CRectangle rectangle({ 30, 40 }, 18, 24);
 
 	painter.Draw(triangle);
