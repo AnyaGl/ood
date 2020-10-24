@@ -7,17 +7,11 @@ namespace app
 class CModernGraphicsAdapter : public graphics_lib::ICanvas
 {
 public:
-	CModernGraphicsAdapter(modern_graphics_lib::CModernGraphicsRenderer const& renderer)
+	CModernGraphicsAdapter(modern_graphics_lib::CModernGraphicsRenderer& renderer)
 		: m_renderer(renderer)
 	{
-		m_renderer.BeginDraw();
 	}
-
-	~CModernGraphicsAdapter()
-	{
-		m_renderer.EndDraw();
-	}
-
+	
 	void MoveTo(int x, int y) override
 	{
 		m_start = { x, y };
@@ -29,7 +23,7 @@ public:
 	}
 
 private:
-	modern_graphics_lib::CModernGraphicsRenderer m_renderer;
+	modern_graphics_lib::CModernGraphicsRenderer& m_renderer;
 	modern_graphics_lib::CPoint m_start;
 };
 
@@ -54,6 +48,7 @@ void PaintPictureOnCanvas()
 void PaintPictureOnModernGraphicsRenderer()
 {
 	modern_graphics_lib::CModernGraphicsRenderer renderer(std::cout);
+	renderer.BeginDraw();
 	CModernGraphicsAdapter canvas(renderer);
 	shape_drawing_lib::CCanvasPainter painter(canvas);
 	PaintPicture(painter);
