@@ -7,10 +7,11 @@ TEST_CASE("When the adapter creates BeginDraw() isn't called")
 	std::stringstream ss;
 	app::CModernGraphicsAdapter adapter(ss);
 
-	CHECK_THROWS(adapter.DrawLine({ 0, 0 }, { 20, 30 }));
+	adapter.MoveTo(50, 50);
 
+	CHECK_THROWS(adapter.LineTo(100, 100));
 	adapter.BeginDraw();
-	CHECK_NOTHROW(adapter.DrawLine({ 0, 0 }, { 20, 30 }));
+	CHECK_NOTHROW(adapter.LineTo(100, 100));
 }
 
 TEST_CASE("After destroying the adapter EndDraw() is called")
@@ -22,7 +23,7 @@ TEST_CASE("After destroying the adapter EndDraw() is called")
 		adapter.MoveTo(50, 50);
 		adapter.LineTo(100, 100);
 	}
-	std::string expectedStr = "<draw>\n  <line fromX=\"50\" fromY=\"50\" toX=\"100\" toY=\"100\"/>\n</draw>\n";
+	std::string expectedStr = "<draw>\n  <line fromX=\"50\" fromY=\"50\" toX=\"100\" toY=\"100\">\n    <color r=\"0\" g=\"0\" b=\"0\" a=\"1\" />\n  </line>\n</draw>\n";
 
 	CHECK(ss.str() == expectedStr);
 }
@@ -37,7 +38,7 @@ TEST_CASE("EndDraw() finishes drawing")
 	adapter.LineTo(100, 100);
 	adapter.EndDraw();
 
-	std::string expectedStr = "<draw>\n  <line fromX=\"50\" fromY=\"50\" toX=\"100\" toY=\"100\"/>\n</draw>\n";
+	std::string expectedStr = "<draw>\n  <line fromX=\"50\" fromY=\"50\" toX=\"100\" toY=\"100\">\n    <color r=\"0\" g=\"0\" b=\"0\" a=\"1\" />\n  </line>\n</draw>\n";
 
 	CHECK(ss.str() == expectedStr);
 }
@@ -50,7 +51,21 @@ TEST_CASE("Drawing a line using an adapter draws a line with renderer")
 	adapter.MoveTo(50, 50);
 	adapter.LineTo(100, 100);
 
-	std::string expectedStr = "<draw>\n  <line fromX=\"50\" fromY=\"50\" toX=\"100\" toY=\"100\"/>\n";
+	std::string expectedStr = "<draw>\n  <line fromX=\"50\" fromY=\"50\" toX=\"100\" toY=\"100\">\n    <color r=\"0\" g=\"0\" b=\"0\" a=\"1\" />\n  </line>\n";
+
+	CHECK(ss.str() == expectedStr);
+}
+
+TEST_CASE("SetColor() converts hex color to rgba")
+{
+	std::stringstream ss;
+	app::CModernGraphicsAdapter adapter(ss);
+	adapter.BeginDraw();
+	adapter.SetColor(0xAA12B0);
+	adapter.MoveTo(50, 50);
+	adapter.LineTo(100, 100);
+
+	std::string expectedStr = "<draw>\n  <line fromX=\"50\" fromY=\"50\" toX=\"100\" toY=\"100\">\n    <color r=\"0.67\" g=\"0.07\" b=\"0.69\" a=\"1\" />\n  </line>\n";
 
 	CHECK(ss.str() == expectedStr);
 }
