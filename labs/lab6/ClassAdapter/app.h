@@ -16,9 +16,9 @@ public:
 
 	void SetColor(uint32_t rgbColor) override
 	{
-		float b = float(rgbColor % 256 / 255.0);
-		float g = float((rgbColor / 256) % 256 / 255.0);
-		float r = float(((rgbColor / 256) / 256) % 256 / 255.0);
+		float r = float(((rgbColor >> 16) & 0xFF) / 255.0);
+		float g = float((rgbColor >> 8 & 0xFF) / 255.0);
+		float b = float((rgbColor & 0xFF) / 255.0);
 		float a = 1.;
 
 		m_color = {r, g, b, a};
