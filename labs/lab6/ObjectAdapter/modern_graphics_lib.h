@@ -16,6 +16,19 @@ public:
 	int y;
 };
 
+class CRGBAColor
+{
+public:
+	CRGBAColor(float r, float g, float b, float a)
+		: r(r)
+		, g(g)
+		, b(b)
+		, a(a)
+	{
+	}
+	float r, g, b, a;
+};
+
 class CModernGraphicsRenderer
 {
 public:
@@ -42,7 +55,7 @@ public:
 		m_drawing = true;
 	}
 
-	void DrawLine(const CPoint& start, const CPoint& end)
+	void DrawLine(const CPoint& start, const CPoint& end, const CRGBAColor& color)
 	{
 		if (!m_drawing)
 		{
@@ -51,7 +64,12 @@ public:
 		m_out << "  <line fromX=\"" << start.x
 			  << "\" fromY=\"" << start.y
 			  << "\" toX=\"" << end.x
-			  << "\" toY=\"" << end.y << "\"/>"
+			  << "\" toY=\"" << end.y << "\">\n"
+			  << "    <color r=\"" << Round(color.r)
+			  << "\" g=\"" << Round(color.g)
+			  << "\" b=\"" << Round(color.b)
+			  << "\" a=\"" << Round(color.a) << "\" />\n"
+			  << "  </line>"
 			  << std::endl;
 	}
 
@@ -66,6 +84,11 @@ public:
 	}
 
 private:
+	float Round(float value)
+	{
+		return std::round(value * 100) / 100;
+	}
+
 	std::ostream& m_out;
 	bool m_drawing = false;
 };

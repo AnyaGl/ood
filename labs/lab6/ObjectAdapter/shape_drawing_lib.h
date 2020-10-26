@@ -19,15 +19,18 @@ public:
 class CTriangle : public ICanvasDrawable
 {
 public:
-	CTriangle(const Point& vertex1, const Point& vertex2, const Point& vertex3)
+	CTriangle(const Point& vertex1, const Point& vertex2, const Point& vertex3, uint32_t color = 0)
 		: m_vertex1(vertex1)
 		, m_vertex2(vertex2)
 		, m_vertex3(vertex3)
+		, m_color(color)
 	{
 	}
 
 	void Draw(graphics_lib::ICanvas& canvas) const override
 	{
+		canvas.SetColor(m_color);
+
 		canvas.MoveTo(m_vertex1.x, m_vertex1.y);
 		canvas.LineTo(m_vertex2.x, m_vertex2.y);
 		canvas.LineTo(m_vertex3.x, m_vertex3.y);
@@ -40,20 +43,24 @@ private:
 	Point m_vertex1;
 	Point m_vertex2;
 	Point m_vertex3;
+	uint32_t m_color;
 };
 
 class CRectangle : public ICanvasDrawable
 {
 public:
-	CRectangle(const Point& leftTop, int width, int height)
+	CRectangle(const Point& leftTop, int width, int height, uint32_t color = 0)
 		: m_leftTop(leftTop)
 		, m_width(width)
 		, m_height(height)
+		, m_color(color)
 	{
 	}
 
 	void Draw(graphics_lib::ICanvas& canvas) const override
 	{
+		canvas.SetColor(m_color);
+
 		canvas.MoveTo(m_leftTop.x, m_leftTop.y);
 		canvas.LineTo(m_leftTop.x + m_width, m_leftTop.y);
 		canvas.LineTo(m_leftTop.x, m_leftTop.y - m_height);
@@ -67,6 +74,7 @@ private:
 	Point m_leftTop;
 	int m_width;
 	int m_height;
+	uint32_t m_color;
 };
 
 class CCanvasPainter
