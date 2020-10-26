@@ -172,10 +172,10 @@ TEST_CASE("Save() must create html file with document elements")
 	std::stringstream result;
 	result << "<html>\n"
 		   << "<head>\n"
-		   << "<title>&lt;&apos;\&quot;&amp;title&gt;</title>\n"
+		   << "<title>&lt;&apos;&quot;&amp;title&gt;</title>\n"
 		   << "</head>\n"
 		   << "<body>\n"
-		   << "<p>&lt;hello&apos;\&quot;&amp;&gt;</p>\n"
+		   << "<p>&lt;hello&apos;&quot;&amp;&gt;</p>\n"
 		   << "<img src=\"" + imagePath + "\" width=\"200\" height=\"300\" />\n"
 		   << "</body>\n"
 		   << "</html>\n";
