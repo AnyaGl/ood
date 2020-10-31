@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Исходные файлы">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Файлы заголовков">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Файлы ресурсов">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Исходные файлы\lab">
+      <UniqueIdentifier>{cf34d352-234f-44f4-81f4-c49321ef999f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\lab">
+      <UniqueIdentifier>{d1948341-02d4-4326-895c-2343f89c6f56}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SlidesTests.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="ShapeGroupTests.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Slides\Ellipse.cpp">
+      <Filter>Исходные файлы\lab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Slides\FillStyle.cpp">
+      <Filter>Исходные файлы\lab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Slides\GroupFillStyle.cpp">
+      <Filter>Исходные файлы\lab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Slides\GroupOutlineStyle.cpp">
+      <Filter>Исходные файлы\lab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Slides\OutlineStyle.cpp">
+      <Filter>Исходные файлы\lab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Slides\Rectangle.cpp">
+      <Filter>Исходные файлы\lab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Slides\SimpleShape.cpp">
+      <Filter>Исходные файлы\lab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Slides\Slide.cpp">
+      <Filter>Исходные файлы\lab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Slides\Triangle.cpp">
+      <Filter>Исходные файлы\lab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Slides\ShapeGroup.cpp">
+      <Filter>Исходные файлы\lab</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Slides\CommonTypes.h">
+      <Filter>Файлы заголовков\lab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Slides\Ellipse.h">
+      <Filter>Файлы заголовков\lab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Slides\FillStyle.h">
+      <Filter>Файлы заголовков\lab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Slides\GroupFillStyle.h">
+      <Filter>Файлы заголовков\lab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Slides\GroupOutlineStyle.h">
+      <Filter>Файлы заголовков\lab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Slides\ICanvas.h">
+      <Filter>Файлы заголовков\lab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Slides\IDrawable.h">
+      <Filter>Файлы заголовков\lab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Slides\IOutlineStyle.h">
+      <Filter>Файлы заголовков\lab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Slides\IShape.h">
+      <Filter>Файлы заголовков\lab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Slides\IShapes.h">
+      <Filter>Файлы заголовков\lab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Slides\ISlide.h">
+      <Filter>Файлы заголовков\lab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Slides\IStyle.h">
+      <Filter>Файлы заголовков\lab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Slides\OutlineStyle.h">
+      <Filter>Файлы заголовков\lab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Slides\Rectangle.h">
+      <Filter>Файлы заголовков\lab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Slides\SimpleShape.h">
+      <Filter>Файлы заголовков\lab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Slides\Slide.h">
+      <Filter>Файлы заголовков\lab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Slides\Triangle.h">
+      <Filter>Файлы заголовков\lab</Filter>
+    </ClInclude>
+    <ClInclude Include="MockCanvas.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Slides\IShapeGroup.h">
+      <Filter>Файлы заголовков\lab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Slides\ShapeGroup.h">
+      <Filter>Файлы заголовков\lab</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
