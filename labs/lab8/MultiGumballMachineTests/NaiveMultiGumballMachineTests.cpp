@@ -109,12 +109,12 @@ TEST_CASE("Gumball machine store max 5 quarters in NaiveGumballMachine")
 	machine.InsertQuarter();
 	CHECK(machine.ToString() == CreateGumballMachineState(5, 4, "waiting for turn of crank"));
 	machine.InsertQuarter();
-	CHECK(machine.ToString() == CreateGumballMachineState(5, 5, "waiting for turn of crank"));
+	CHECK(machine.ToString() == CreateGumballMachineState(5, 5, "quarters store is full. waiting for turn of crank"));
 	machine.InsertQuarter();
-	CHECK(machine.ToString() == CreateGumballMachineState(5, 5, "waiting for turn of crank"));
+	CHECK(machine.ToString() == CreateGumballMachineState(5, 5, "quarters store is full. waiting for turn of crank"));
 
 	machine.TurnCrank();
 	CHECK(machine.ToString() == CreateGumballMachineState(4, 4, "waiting for turn of crank"));
 	machine.InsertQuarter();
-	CHECK(machine.ToString() == CreateGumballMachineState(4, 5, "waiting for turn of crank"));
+	CHECK(machine.ToString() == CreateGumballMachineState(4, 5, "quarters store is full. waiting for turn of crank"));
 }

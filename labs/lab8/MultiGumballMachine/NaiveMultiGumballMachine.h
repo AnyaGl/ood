@@ -4,15 +4,18 @@
 
 namespace naive
 {
+constexpr unsigned MAX_QUARTERS = 5;
+
 class CGumballMachine
 {
 public:
 	enum class State
 	{
-		SoldOut, 
-		NoQuarter, 
-		HasQuarter, 
-		Sold, 
+		SoldOut,
+		NoQuarter,
+		HasQuarter,
+		MaxQuarters,
+		Sold,
 	};
 
 	CGumballMachine(unsigned count)
@@ -24,11 +27,6 @@ public:
 	void InsertQuarter()
 	{
 		using namespace std;
-		if (m_quarterCount == 5)
-		{
-			cout << "You can't insert a quarter. max 5 quarters\n";
-			return;
-		}
 		switch (m_state)
 		{
 		case State::SoldOut:
@@ -43,6 +41,10 @@ public:
 		case State::HasQuarter:
 			cout << "You inserted another quarter\n";
 			m_quarterCount++;
+			m_state = (m_quarterCount == MAX_QUARTERS) ? State::MaxQuarters : m_state;
+			break;
+		case State::MaxQuarters:
+			std::cout << "You can't insert another quarter: max " << MAX_QUARTERS << " quarters\n";
 			break;
 		case State::Sold:
 			cout << "Please wait, we're already giving you a gumball\n";
@@ -55,6 +57,7 @@ public:
 		using namespace std;
 		switch (m_state)
 		{
+		case State::MaxQuarters:
 		case State::HasQuarter:
 			cout << "Quarter returned (" + std::to_string(m_quarterCount) + ")\n";
 			m_quarterCount = 0;
@@ -84,6 +87,7 @@ public:
 		case State::NoQuarter:
 			cout << "You turned but there's no quarter\n";
 			break;
+		case State::MaxQuarters:
 		case State::HasQuarter:
 			cout << "You turned...\n";
 			m_state = State::Sold;
@@ -98,11 +102,12 @@ public:
 			break;
 		}
 	}
-	
+
 	std::string ToString() const
 	{
 		std::string state = (m_state == State::SoldOut) ? "sold out" : (m_state == State::NoQuarter) ? "waiting for quarter"
 			: (m_state == State::HasQuarter)														 ? "waiting for turn of crank"
+			: (m_state == State::MaxQuarters)														 ? "quarters store is full. waiting for turn of crank"
 																									 : "delivering a gumball";
 		std::stringstream ss;
 		ss << "Mighty Gumball, Inc. "
@@ -150,6 +155,7 @@ private:
 		case State::NoQuarter:
 			cout << "You need to pay first\n";
 			break;
+		case State::MaxQuarters:
 		case State::SoldOut:
 		case State::HasQuarter:
 			cout << "No gumball dispensed\n";

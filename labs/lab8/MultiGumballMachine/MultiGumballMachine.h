@@ -21,11 +21,13 @@ struct IGumballMachine
 	virtual void ReleaseQuarter() = 0;
 	virtual unsigned GetBallCount() const = 0;
 	virtual unsigned GetQuarterCount() const = 0;
+	virtual void AddQuarter() = 0;
 
 	virtual void SetSoldOutState() = 0;
 	virtual void SetNoQuarterState() = 0;
 	virtual void SetSoldState() = 0;
 	virtual void SetHasQuarterState() = 0;
+	virtual void SetMaxQuartersState() = 0;
 
 	virtual ~IGumballMachine() = default;
 };
@@ -89,6 +91,7 @@ public:
 	void InsertQuarter() override
 	{
 		std::cout << "You inserted another quarter\n";
+		m_gumballMachine.AddQuarter();
 	}
 	void EjectQuarter() override
 	{
@@ -115,6 +118,8 @@ private:
 	IGumballMachine& m_gumballMachine;
 };
 
+constexpr unsigned MAX_QUARTERS = 5;
+
 class CHasQuarterState : public IState
 {
 public:
@@ -126,6 +131,11 @@ public:
 	void InsertQuarter() override
 	{
 		std::cout << "You inserted another quarter\n";
+		m_gumballMachine.AddQuarter();
+		if (m_gumballMachine.GetQuarterCount() == MAX_QUARTERS)
+		{
+			m_gumballMachine.SetMaxQuartersState();
+		}
 	}
 	void EjectQuarter() override
 	{
@@ -166,6 +176,7 @@ public:
 	void InsertQuarter() override
 	{
 		std::cout << "You inserted a quarter\n";
+		m_gumballMachine.AddQuarter();
 		m_gumballMachine.SetHasQuarterState();
 	}
 	void EjectQuarter() override
@@ -189,6 +200,46 @@ private:
 	IGumballMachine& m_gumballMachine;
 };
 
+class CMaxQuartersState : public IState
+{
+public:
+	CMaxQuartersState(IGumballMachine& gumballMachine)
+		: m_gumballMachine(gumballMachine)
+	{
+	}
+
+	void InsertQuarter() override
+	{
+		std::cout << "You can't insert another quarter: max " << MAX_QUARTERS << " quarters\n";
+	}
+	void EjectQuarter() override
+	{
+		std::cout << "Quarter returned (" + std::to_string(m_gumballMachine.GetQuarterCount()) + ")\n";
+		while (m_gumballMachine.GetQuarterCount() != 0)
+		{
+			m_gumballMachine.ReleaseQuarter();
+		}
+		m_gumballMachine.SetNoQuarterState();
+	}
+	void TurnCrank() override
+	{
+		std::cout << "You turned...\n";
+		m_gumballMachine.ReleaseQuarter();
+		m_gumballMachine.SetSoldState();
+	}
+	void Dispense() override
+	{
+		std::cout << "No gumball dispensed\n";
+	}
+	std::string ToString() const override
+	{
+		return "quarters store is full. waiting for turn of crank";
+	}
+
+private:
+	IGumballMachine& m_gumballMachine;
+};
+
 class CGumballMachine : private IGumballMachine
 {
 public:
@@ -197,6 +248,7 @@ public:
 		, m_soldOutState(*this)
 		, m_noQuarterState(*this)
 		, m_hasQuarterState(*this)
+		, m_maxQuartersState(*this)
 		, m_state(&m_soldOutState)
 		, m_count(numBalls)
 	{
@@ -208,16 +260,9 @@ public:
 	void EjectQuarter()
 	{
 		m_state->EjectQuarter();
-		m_quarterCount = 0;
 	}
 	void InsertQuarter()
 	{
-		if (m_quarterCount == 5)
-		{
-			std::cout << "You can't insert another quarter: max 5 quarters\n";
-			return;
-		}
-		m_quarterCount++;
 		m_state->InsertQuarter();
 	}
 	void TurnCrank()
@@ -268,6 +313,10 @@ private:
 			--m_quarterCount;
 		}
 	}
+	void AddQuarter() override
+	{
+		m_quarterCount++;
+	}
 	void SetSoldOutState() override
 	{
 		m_state = &m_soldOutState;
@@ -284,6 +333,10 @@ private:
 	{
 		m_state = &m_hasQuarterState;
 	}
+	void SetMaxQuartersState() override
+	{
+		m_state = &m_maxQuartersState;
+	}
 
 private:
 	unsigned m_count = 0;
@@ -292,6 +345,7 @@ private:
 	CSoldOutState m_soldOutState;
 	CNoQuarterState m_noQuarterState;
 	CHasQuarterState m_hasQuarterState;
+	CMaxQuartersState m_maxQuartersState;
 	IState* m_state;
 };
 
