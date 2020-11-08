@@ -90,7 +90,6 @@ public:
 
 	void InsertQuarter() override
 	{
-		std::cout << "You inserted another quarter\n";
 		m_gumballMachine.AddQuarter();
 	}
 	void EjectQuarter() override
@@ -130,7 +129,6 @@ public:
 
 	void InsertQuarter() override
 	{
-		std::cout << "You inserted another quarter\n";
 		m_gumballMachine.AddQuarter();
 		if (m_gumballMachine.GetQuarterCount() == MAX_QUARTERS)
 		{
@@ -175,7 +173,6 @@ public:
 
 	void InsertQuarter() override
 	{
-		std::cout << "You inserted a quarter\n";
 		m_gumballMachine.AddQuarter();
 		m_gumballMachine.SetHasQuarterState();
 	}
@@ -315,7 +312,15 @@ private:
 	}
 	void AddQuarter() override
 	{
-		m_quarterCount++;
+		if (GetQuarterCount() < MAX_QUARTERS)
+		{
+			m_quarterCount++;
+			std::cout << "You inserted a quarter\n";
+		}
+		else
+		{
+			std::cout << "You can't insert another quarter: max " << MAX_QUARTERS << " quarters\n";
+		}
 	}
 	void SetSoldOutState() override
 	{
