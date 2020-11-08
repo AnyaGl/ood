@@ -74,6 +74,56 @@ TEST_CASE("Test has quarter state")
 	}
 }
 
+TEST_CASE("Test max quarters state")
+{
+	CGumballMachine machine(2);
+	machine.InsertQuarter();
+	machine.InsertQuarter();
+	machine.InsertQuarter();
+	machine.InsertQuarter();
+	machine.InsertQuarter();
+
+	CHECK(machine.ToString() == CreateGumballMachineState(2, 5, "quarters store is full. waiting for turn of crank"));
+
+	SECTION("InsertQuarter() doesn't change machine state")
+	{
+		machine.InsertQuarter();
+		CHECK(machine.ToString() == CreateGumballMachineState(2, 5, "quarters store is full. waiting for turn of crank"));
+	}
+
+	SECTION("EjectQuarter() changes machine state to NoQuarterState and eject all quarters")
+	{
+		machine.EjectQuarter();
+		CHECK(machine.ToString() == CreateGumballMachineState(2, 0, "waiting for quarter"));
+	}
+
+	SECTION("TurnCrank() will change machine state to SoldOutState if gumbullCount is 0")
+	{
+		CGumballMachine machine(1);
+		machine.InsertQuarter();
+		machine.InsertQuarter();
+		machine.InsertQuarter();
+		machine.InsertQuarter();
+		machine.InsertQuarter();
+
+		machine.TurnCrank();
+		CHECK(machine.ToString() == CreateGumballMachineState(0, 4, "sold out"));
+	}
+
+	SECTION("TurnCrank() will change machine state to HasQuarterState if gumballCount isn't 0")
+	{
+		CGumballMachine machine(2);
+		machine.InsertQuarter();
+		machine.InsertQuarter();
+		machine.InsertQuarter();
+		machine.InsertQuarter();
+		machine.InsertQuarter();
+		machine.TurnCrank();
+
+		CHECK(machine.ToString() == CreateGumballMachineState(1, 4, "waiting for turn of crank"));
+	}
+}
+
 TEST_CASE("Test no quarter state")
 {
 	CGumballMachine machine(2);
@@ -97,6 +147,8 @@ TEST_CASE("Test no quarter state")
 		CHECK(machine.ToString() == CreateGumballMachineState(2, 1, "waiting for turn of crank"));
 	}
 }
+
+
 
 TEST_CASE("Gumball machine store max 5 quarters")
 {
