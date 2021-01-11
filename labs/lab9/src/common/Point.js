@@ -5,11 +5,11 @@ class Point {
      */
     constructor(x, y) {
         /**
-         * {!number}
+         * @type {!number}
          */
         this.x = x;
         /**
-         * {!number}
+         * @type {!number}
          */
         this.y = y;
     }

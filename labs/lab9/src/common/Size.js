@@ -5,11 +5,11 @@ class Size {
      */
     constructor(width, height) {
         /**
-         * {!number}
+         * @type {!number}
          */
         this.width = width;
         /**
-         * {!number}
+         * @type {!number}
          */
         this.height = height;
     }

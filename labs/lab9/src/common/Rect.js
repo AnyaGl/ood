@@ -5,11 +5,13 @@ class Rect {
      */
     constructor(leftTop, size) {
         /**
-         * {!Point}
+         * @type {!Point}
+         * @private
          */
         this._leftTop = leftTop;
         /**
-         * {!Size}
+         * @type {!Size}
+         * @private
          */
         this._size = size;
     }
