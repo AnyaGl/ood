@@ -1,9 +1,10 @@
 class Rect {
-    /**
-     * @param {!Point} leftTop
-     * @param {!Size} size
+    /** @param {{
+     *   leftTop: (!Point),
+     *   size: (!Size),
+     * }} args
      */
-    constructor(leftTop, size) {
+    constructor({leftTop, size}) {
         /**
          * @type {!Point}
          * @private

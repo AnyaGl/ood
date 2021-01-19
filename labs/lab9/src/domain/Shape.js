@@ -1,4 +1,4 @@
-import {generateId} from "../common/Common";
+import {generateId} from "../common/Common.js";
 
 
 class Shape {
@@ -22,7 +22,10 @@ class Shape {
          * @private
          */
         this._id = generateId();
-
+        /**
+         * @type {!Array<!function(!Rect)>}
+         * @private
+         */
         this._onFrameChangedHandlers = [];
     }
 

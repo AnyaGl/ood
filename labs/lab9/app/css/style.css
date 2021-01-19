@@ -1,0 +1,96 @@
+*
+{
+  margin: 0;
+  padding: 0;
+}
+
+.canvas
+{
+  position: absolute;
+  width: 95%;
+  height: 85%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #eeeeee;
+  overflow: hidden;
+}
+
+.shape
+{
+  position: absolute;
+  cursor: pointer;
+}
+
+.selection
+{
+  position: absolute;
+  outline: 1px solid #000000;
+  outline-offset: -1px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.corner {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 4px;
+  background: black;
+  pointer-events: initial;
+}
+
+.left-top {
+  left: -3px;
+  top: -3px;
+  cursor: nwse-resize;
+}
+
+.right-top {
+  right: -3px;
+  top: -3px;
+  cursor: nesw-resize;
+}
+
+.right-bottom {
+  right: -3px;
+  bottom: -3px;
+  cursor: nwse-resize;
+}
+
+.left-bottom {
+  left: -3px;
+  bottom: -3px;
+  cursor: nesw-resize;
+}
+
+.menu
+{
+  margin-left: 50px;
+  padding-top: 5px;
+}
+
+.add-shape-button
+{
+  width: 50px;
+  height: 50px;
+  background-color: #9cd5d5;
+  margin-right: 10px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.add_rectangle
+{
+  background: url("../res/rectangle.svg");
+}
+
+.add_triangle
+{
+  background: url("../res/triangle.svg");
+}
+
+.add_ellipse
+{
+  background: url("../res/circle.svg");
+}
